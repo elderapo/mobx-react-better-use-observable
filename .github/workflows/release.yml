@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  Release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setting up NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x" # Use the same node.js version as the one Zeit's uses (currently node10.x)
+
+      - name: Checking out repo
+        uses: actions/checkout@v1
+
+      - name: Installing packages
+        run: yarn install --frozen-lockfile
+
+      - name: Running tests
+        run: yarn test:prod
+
+      - name: Building package
+        run: yarn build
+
+      - name: Do release
+        run: yarn do-release
