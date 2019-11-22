@@ -24,16 +24,14 @@
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && typedoc --out docs --target es6 --theme minimal --mode file src",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "predo-release": "yarn test:prod && yarn build",
-    "do-release": "yarn report-coverage && yarn deploy-docs && yarn semantic-release"
+    "do-release": "yarn semantic-release"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [

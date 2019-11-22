@@ -2,5 +2,8 @@
   "extends": ["tslint-config-standard", "tslint-config-prettier"],
   "rules": {
     "await-promise": false
+  },
+  "linterOptions": {
+    "exclude": ["src/__tests__/*"]
   }
 }
