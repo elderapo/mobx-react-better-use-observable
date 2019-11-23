@@ -13,7 +13,8 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "declarationDir": "dist/types",
-    "outDir": "dist/lib"
+    "outDir": "dist/lib",
+    "skipLibCheck": true
   },
   "include": ["src"]
 }

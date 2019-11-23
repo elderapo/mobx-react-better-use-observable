@@ -1,5 +1,8 @@
 import { getAtom, IValueDidChange, observe } from "mobx";
-import { DeepProxy, isAtom } from "./helperFunctions";
+import DeepProxyType from "proxy-deep";
+import { isAtom } from "./helperFunctions";
+
+const DeepProxy = require("proxy-deep") as typeof DeepProxyType;
 
 export enum MobxProxyEvent {
   RegisterSubscription = "register-subscription",
@@ -11,10 +14,7 @@ export type MobxProxyEventHandlers = {
   [MobxProxyEvent.Write]: (change: IValueDidChange<any>) => void;
 };
 
-type RegistedHandlers = Map<
-  MobxProxyEvent,
-  MobxProxyEventHandlers[MobxProxyEvent][]
->;
+type RegistedHandlers = Map<MobxProxyEvent, MobxProxyEventHandlers[MobxProxyEvent][]>;
 
 type TrackDataItem = { target: any; key: any };
 
@@ -107,10 +107,10 @@ export class MobxProxy<T extends object> {
     this.callHandlers(MobxProxyEvent.RegisterSubscription, [item]);
   }
 
-  private callHandlers<
-    E extends MobxProxyEvent,
-    H extends MobxProxyEventHandlers[E]
-  >(event: E, args: Parameters<H>): void {
+  private callHandlers<E extends MobxProxyEvent, H extends MobxProxyEventHandlers[E]>(
+    event: E,
+    args: Parameters<H>
+  ): void {
     if (!this.registeredHandlers.has(event)) {
       return;
     }
