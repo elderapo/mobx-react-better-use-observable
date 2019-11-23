@@ -9,16 +9,16 @@ export const useObservable = <T extends object>(store: T): T => {
     return new MobxProxy(store);
   }, [store]);
 
-  useEffect(() => {
-    const removeEventListener = proxy.on(MobxProxyEvent.Write, () => {
-      forceUpdate();
-    });
-
-    return () => {
-      proxy.reset();
-      removeEventListener();
-    };
+  proxy.reset(); // discard old subscriptions
+  const removeEventListener = proxy.on(MobxProxyEvent.Write, () => {
+    forceUpdate();
   });
+
+  useEffect(() => {
+    proxy.dontRegisterNewSubscriptions();
+
+    return () => removeEventListener();
+  }, [removeEventListener]);
 
   return proxy.value;
 };

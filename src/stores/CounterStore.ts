@@ -8,4 +8,9 @@ export class CounterStore {
   public increment(): void {
     this.count++;
   }
+
+  @action.bound
+  public decrement(): void {
+    this.count--;
+  }
 }

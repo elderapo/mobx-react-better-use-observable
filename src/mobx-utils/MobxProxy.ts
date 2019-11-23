@@ -24,6 +24,7 @@ export class MobxProxy<T extends object> {
   public readonly value: T;
   private registeredHandlers: RegistedHandlers = new Map();
 
+  private shouldRegisterNewSubscriptions = true;
   private trackedData = new Map<object, (string | number | symbol)[]>();
   private observeCleaners: (() => void)[] = [];
 
@@ -37,7 +38,9 @@ export class MobxProxy<T extends object> {
 
         const result = target[key];
 
-        that.trackData({ target, key });
+        if (that.shouldRegisterNewSubscriptions) {
+          that.trackData({ target, key });
+        }
 
         if (typeof result === "object" && result !== null) {
           return this.nest(result);
@@ -72,8 +75,13 @@ export class MobxProxy<T extends object> {
   }
 
   public reset(): void {
+    this.shouldRegisterNewSubscriptions = true;
     this.trackedData = new Map();
     this.observeCleaners.forEach(fn => fn());
+  }
+
+  public dontRegisterNewSubscriptions(): void {
+    this.shouldRegisterNewSubscriptions = false;
   }
 
   private trackData(item: TrackDataItem): void {

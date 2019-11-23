@@ -13,10 +13,7 @@ describe("mobx-utils", () => {
 
       const onRegisterSubscriptionHandler = jest.fn();
 
-      proxy.on(
-        MobxProxyEvent.RegisterSubscription,
-        onRegisterSubscriptionHandler
-      );
+      proxy.on(MobxProxyEvent.RegisterSubscription, onRegisterSubscriptionHandler);
 
       expect(onRegisterSubscriptionHandler).not.toBeCalled();
 
@@ -34,10 +31,7 @@ describe("mobx-utils", () => {
 
       const onRegisterSubscriptionHandler = jest.fn();
 
-      proxy.on(
-        MobxProxyEvent.RegisterSubscription,
-        onRegisterSubscriptionHandler
-      );
+      proxy.on(MobxProxyEvent.RegisterSubscription, onRegisterSubscriptionHandler);
 
       expect(onRegisterSubscriptionHandler).not.toBeCalled();
 
@@ -166,22 +160,19 @@ describe("mobx-utils", () => {
       const onRegisterSubscriptionHandler = jest.fn();
       const onWriteHandler = jest.fn();
 
-      proxy.on(
-        MobxProxyEvent.RegisterSubscription,
-        onRegisterSubscriptionHandler
-      );
+      proxy.on(MobxProxyEvent.RegisterSubscription, onRegisterSubscriptionHandler);
       proxy.on(MobxProxyEvent.Write, onWriteHandler);
 
       expect(onRegisterSubscriptionHandler).not.toBeCalled();
       expect(onWriteHandler).not.toBeCalled();
 
-      proxy.value.a.b.c.count;
+      proxy.value.a.b.c.counterStore.count;
 
       expect(onRegisterSubscriptionHandler).toBeCalled();
       expect(onWriteHandler).not.toBeCalled();
 
-      proxy.value.a.b.c.increment();
-      store.a.b.c.increment();
+      proxy.value.a.b.c.counterStore.increment();
+      store.a.b.c.counterStore.increment();
 
       expect(onRegisterSubscriptionHandler).toBeCalled();
       expect(onWriteHandler).toBeCalledTimes(2);
@@ -197,10 +188,7 @@ describe("mobx-utils", () => {
       const onRegisterSubscriptionHandler = jest.fn();
       const onWriteHandler = jest.fn();
 
-      proxy.on(
-        MobxProxyEvent.RegisterSubscription,
-        onRegisterSubscriptionHandler
-      );
+      proxy.on(MobxProxyEvent.RegisterSubscription, onRegisterSubscriptionHandler);
       proxy.on(MobxProxyEvent.Write, onWriteHandler);
 
       expect(onRegisterSubscriptionHandler).not.toBeCalled();

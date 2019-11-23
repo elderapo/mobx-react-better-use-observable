@@ -3,7 +3,9 @@ import { CounterStore } from "./CounterStore";
 export class StoreWithNestedCounter {
   public a = {
     b: {
-      c: new CounterStore()
+      c: {
+        counterStore: new CounterStore()
+      }
     }
   };
 }
